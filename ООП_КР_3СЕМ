@@ -97,7 +97,7 @@ public class Matrix {
         System.out.println();
     }
 
-    // Метод печати главной диагонали (для квадратных матриц)
+    // Метод печати главной диагонали 
     public void printMainDiagonal() {
         int limit = Math.min(rows, cols);
         for (int i = 0; i < limit; i++) {
@@ -106,7 +106,7 @@ public class Matrix {
         System.out.println();
     }
 
-    // Метод печати побочной диагонали (для квадратных матриц)
+    // Метод печати побочной диагонали 
     public void printSecondaryDiagonal() {
         int limit = Math.min(rows, cols);
         for (int i = 0; i < limit; i++) {
