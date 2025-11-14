@@ -1,0 +1,117 @@
+public class Matrix {
+    private int[][] data;  // поле для хранения элементов матрицы
+    private int rows;      // количество строк
+    private int cols;      // количество столбцов
+
+    // Конструктор: создаёт матрицу rows x cols
+    public Matrix(int rows, int cols) {
+        this.rows = rows;
+        this.cols = cols;
+        data = new int[rows][cols];
+    }
+
+    // Заполнение матрицы из двумерного массива (для удобства)
+    public Matrix(int[][] array) {
+        this.rows = array.length;
+        this.cols = array[0].length;
+        data = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            System.arraycopy(array[i], 0, data[i], 0, cols);
+        }
+    }
+
+    // Метод сложения двух матриц, возвращает новую матрицу
+    public Matrix add(Matrix other) {
+        if (this.rows != other.rows || this.cols != other.cols) {
+            throw new IllegalArgumentException("Матрицы должны иметь одинаковый размер для сложения.");
+        }
+        Matrix result = new Matrix(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result.data[i][j] = this.data[i][j] + other.data[i][j];
+            }
+        }
+        return result;
+    }
+
+    // Метод вычитания другой матрицы
+    public Matrix subtract(Matrix other) {
+        if (this.rows != other.rows || this.cols != other.cols) {
+            throw new IllegalArgumentException("Матрицы должны иметь одинаковый размер для вычитания.");
+        }
+        Matrix result = new Matrix(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result.data[i][j] = this.data[i][j] - other.data[i][j];
+            }
+        }
+        return result;
+    }
+
+    // Метод умножения матриц
+    public Matrix multiply(Matrix other) {
+        if (this.cols != other.rows) {
+            throw new IllegalArgumentException("Число столбцов первой матрицы должно равняться числу строк второй для умножения.");
+        }
+        Matrix result = new Matrix(this.rows, other.cols);
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < other.cols; j++) {
+                int sum = 0;
+                for (int k = 0; k < this.cols; k++) {
+                    sum += this.data[i][k] * other.data[k][j];
+                }
+                result.data[i][j] = sum;
+            }
+        }
+        return result;
+    }
+
+    // Метод печати всей матрицы
+    public void printMatrix() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                System.out.print(data[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    // Метод печати определённого столбца
+    public void printColumn(int colIndex) {
+        if (colIndex < 0 || colIndex >= cols) {
+            throw new IndexOutOfBoundsException("Индекс столбца вне диапазона.");
+        }
+        for (int i = 0; i < rows; i++) {
+            System.out.println(data[i][colIndex]);
+        }
+    }
+
+    // Метод печати определённой строки
+    public void printRow(int rowIndex) {
+        if (rowIndex < 0 || rowIndex >= rows) {
+            throw new IndexOutOfBoundsException("Индекс строки вне диапазона.");
+        }
+        for (int j = 0; j < cols; j++) {
+            System.out.print(data[rowIndex][j] + "\t");
+        }
+        System.out.println();
+    }
+
+    // Метод печати главной диагонали (для квадратных матриц)
+    public void printMainDiagonal() {
+        int limit = Math.min(rows, cols);
+        for (int i = 0; i < limit; i++) {
+            System.out.print(data[i][i] + "\t");
+        }
+        System.out.println();
+    }
+
+    // Метод печати побочной диагонали (для квадратных матриц)
+    public void printSecondaryDiagonal() {
+        int limit = Math.min(rows, cols);
+        for (int i = 0; i < limit; i++) {
+            System.out.print(data[i][cols - 1 - i] + "\t");
+        }
+        System.out.println();
+    }
+}
